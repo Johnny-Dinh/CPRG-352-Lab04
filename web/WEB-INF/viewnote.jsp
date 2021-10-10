@@ -21,8 +21,8 @@
         </div>
 
         <div>
-            <h4>Title: </h4>
-            <h4>Contents: </h4>
+            <h4>Title: ${note.title}</h4>
+            <h4>Contents:</h4> ${note.contents}
         </div>
 
         <div>

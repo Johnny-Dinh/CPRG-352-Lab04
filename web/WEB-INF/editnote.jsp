@@ -21,16 +21,16 @@
 
             <div>
                 <label>Title:</label>
-                <input type="text" name="title" value="">
+                <input type="text" name="title" value="${note.title}">
             </div>
             
             <div>
                 <label>Contents:</label>
-                <textarea type="text" name="content" value=""></textarea>
+                <textarea type="text" name="contents" value="${note.contents}"></textarea>
             </div>
             
             <div>
-                <input type="submit" name="save" value="Save">
+                <input type="submit" name="edit" value="Save">
             </div>
         </form>   
     </body>

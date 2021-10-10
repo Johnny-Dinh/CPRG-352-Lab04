@@ -1,5 +1,10 @@
 package servlets;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import models.Note;
 
 import java.io.IOException;
@@ -19,10 +24,21 @@ public class NoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Retrieve the text file
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        // Read the text file
+        BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+        
         // Note object of Note Class
-        Note note = new Note();
+        Note note = new Note(br.readLine(), br.readLine());
+        //br.close();
         request.setAttribute("note", note);
-
+        
+        String title = "";
+        String contents = "";
+        request.setAttribute("title", title);
+        request.setAttribute("contents", contents);
+        
         String edit = request.getParameter("edit");
         if (edit == null) {
             getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
@@ -37,6 +53,26 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        
+        // Write to the text file
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)));
+        
+        String title = request.getParameter("title");
+        String contents = request.getParameter("contents");
+        
+        // Prints out the input into the text file
+        pw.println("title");
+        pw.println("contents");
+        
+        Note note = new Note(title, contents);
+        request.setAttribute("note",note);
+        
+        String edit = request.getParameter("edit");
+        if (edit != null || edit != "") {
+            getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
+                    .forward(request, response);
+        }
+        return;
     }
 }
